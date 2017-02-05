@@ -12,14 +12,6 @@ using LiteDB;
 
 namespace WindowsFormsApplication1
 {
-    public class SavedNumberEntity
-    {
-        public int Id { get; set; }
-        public int Value { get; set; }
-
-        public DateTime ChangeTime { get; set; }
-    }
-
     public partial class Form1 : Form
     {
         private const string DbFileName = "ApplicationDataBase.db";
