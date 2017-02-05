@@ -85,20 +85,23 @@ namespace WindowsFormsApplication1
 
         private async Task<IEnumerable<int>> RandomNumbers()
         {
+            var alreadyChecked = GetSavedNumbers().Select(c => c.Value).ToList(); 
+            var toSelect = Enumerable.Range(0, 3600).Except(alreadyChecked).ToList();
+
             var numbers = new List<int>();
+            var random = new Random();
 
             while (numbers.Count < 10)
             {
                 await Task.Factory.StartNew(() =>
                 {
-                    Random random = new Random();
-                    int oneInt = random.Next(0, 3600);
+                    int oneInt = random.Next(0, toSelect.Count);
 
                     if (!IsChecked(oneInt))
                     {
                         numbers.Add(oneInt);
+                        toSelect = toSelect.Except(numbers).ToList();
                     }
-                    Thread.Sleep(500);
                 });
             }
 
@@ -149,12 +152,22 @@ namespace WindowsFormsApplication1
 
         private void button4_Click_1(object sender, EventArgs e)
         {
-            Check(Numbers);
+            if (Numbers.Any())
+            {
+                Check(Numbers);
+
+            }
+            else
+            {
+                MessageBox.Show("Brak wczytancyh wartości.");
+            }
+
+            loaded(null, null);
         }
 
         private void loaded(object sender, EventArgs e)
         {
-           
+            Text = "Wczytane: " + GetSavedNumbers().Count();
         }
     }
 }
