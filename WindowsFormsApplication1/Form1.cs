@@ -67,12 +67,12 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string odczyt = System.IO.File.ReadAllText(@"C:\1111.txt");
+            //string odczyt = System.IO.File.ReadAllText(@"C:\1111.txt");
             //Thread.Sleep(100);
-            textBox1.Text = odczyt + "\r\n";
+            //textBox1.Text = odczyt + "\r\n";
             label3.Text = "";
-            textBox1.ScrollBars = ScrollBars.Vertical;
-            label2.Text = "Wszystkie pozycje:";
+            //textBox1.ScrollBars = ScrollBars.Vertical;
+            //label2.Text = "Wszystkie pozycje:";
         }
 
         private async Task<IEnumerable<int>> RandomNumbers()
@@ -166,6 +166,18 @@ namespace WindowsFormsApplication1
         private void loaded(object sender, EventArgs e)
         {
             Text = "Wczytane: " + GetSavedNumbers().Count();
+            int pozostalo = 3600 - GetSavedNumbers().Count();
+            label4.Text = "Sprawdzonych zostalo:" + GetSavedNumbers().Count() + "\r\n\r\nDo Sprawdzenia:" + pozostalo;
         }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+           
+    }
     }
 }
