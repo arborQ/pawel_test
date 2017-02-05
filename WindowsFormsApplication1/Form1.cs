@@ -41,7 +41,7 @@ namespace WindowsFormsApplication1
                 var dbColletion = db.GetCollection<SavedNumberEntity>(tableName);
                 foreach (var value in valuse)
                 {
-                    dbColletion.EnsureIndex(a => a.Value);
+                    dbColletion.EnsureIndex(a => a.Value, true);
                     dbColletion.Insert(new SavedNumberEntity
                     {
                         Value = value,
@@ -85,7 +85,7 @@ namespace WindowsFormsApplication1
 
         private async Task<IEnumerable<int>> RandomNumbers()
         {
-            var alreadyChecked = GetSavedNumbers().Select(c => c.Value).ToList(); 
+            var alreadyChecked = GetSavedNumbers().Select(c => c.Value).ToList();
             var toSelect = Enumerable.Range(0, 3600).Except(alreadyChecked).ToList();
 
             var numbers = new List<int>();
@@ -154,8 +154,14 @@ namespace WindowsFormsApplication1
         {
             if (Numbers.Any())
             {
-                Check(Numbers);
-
+                try
+                {
+                    Check(Numbers);
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
             }
             else
             {
