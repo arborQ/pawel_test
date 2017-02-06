@@ -78,16 +78,16 @@ namespace WindowsFormsApplication1
         private async Task<IEnumerable<int>> RandomNumbers()
         {
             var alreadyChecked = GetSavedNumbers().Select(c => c.Value).ToList();
-            var toSelect = Enumerable.Range(0, 3600).Except(alreadyChecked).ToList();
+            var toSelect = Enumerable.Range(0, 20).Except(alreadyChecked).ToList();
 
             var numbers = new List<int>();
             var random = new Random();
 
-            while (numbers.Count < 10)
+            while (numbers.Count < 10 && toSelect.Count != 0)
             {
                 await Task.Factory.StartNew(() =>
                 {
-                    int oneInt = random.Next(0, toSelect.Count);
+                    int oneInt = toSelect[random.Next(0, toSelect.Count)];
 
                     if (!IsChecked(oneInt))
                     {
